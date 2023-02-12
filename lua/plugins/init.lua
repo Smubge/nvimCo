@@ -87,7 +87,6 @@ return
 
    {"Pocco81/auto-save.nvim"},
    { "mfussenegger/nvim-jdtls", ft = { "java" }},
-   {"HiPhish/gradle.nvim"},
    {"akinsho/bufferline.nvim"},
    {"moll/vim-bbye"},
   --Buffers
