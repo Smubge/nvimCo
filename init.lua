@@ -1,3 +1,7 @@
+vim.cmd "set shell=powershell"
+vim.cmd "set shellcmdflag=-command"
+vim.cmd "set shellquote=\" " 
+vim.cmd "set shellxquote= "
 
 require "user.autocommands"
 require "user.options"
@@ -20,3 +24,4 @@ require "user.toggleterm"
 require "user.gitsigns"
 vim.cmd "colorscheme dracula"
 vim.cmd "colorscheme dracula"
+

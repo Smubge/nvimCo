@@ -26,10 +26,10 @@ keymap("n", "<C-Right>", ":vertical resize +2<CR>", opts)
 
 --//Quality of life
 --Telescope
-keymap("n", "ff", ":Telescope find_files<CR>", opts)
-keymap("n", "fl", ":Telescope live_grep<CR>", opts)
-keymap("n", "fb", ":Telescope buffers<CR>", opts)
-keymap("n", "fg", ":Telescope current_buffer_fuzzy_find<CR>", opts)
+keymap("n", "tf", ":Telescope find_files<CR>", opts)
+keymap("n", "tl", ":Telescope live_grep<CR>", opts)
+keymap("n", "tb", ":Telescope buffers<CR>", opts)
+keymap("n", "tg", ":Telescope current_buffer_fuzzy_find<CR>", opts)
 
 
 

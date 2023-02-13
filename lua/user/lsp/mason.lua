@@ -14,7 +14,11 @@ local settings = {
 			package_uninstalled = "◍",
 		},
 	},
-	log_level = vim.log.levels.INFO,
+  providers = {
+            "mason.providers.client",
+            "mason.providers.registry-api",
+  },
+	log_level = vim.log.levels.DEBUG,
 	max_concurrent_installers = 4,
 }
 
