@@ -133,6 +133,16 @@ local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 local servers = {"rust_analyzer", "clangd", "sumneko_lua", "jsonls","svelte", "jdtls", "pyright"}
 
+
 for _, server in pairs(servers) do
   require("lspconfig")[server].setup {capabilities = capabilities}
 end
+
+require("lspconfig")["luau_lsp"].setup {
+  cmd = { "luau-lsp" },
+  capabilities = capabilities,
+  filetypes = { "lua" },
+  on_attach = function(client, bufnr)
+    client.resolved_capabilities.document_formatting = false
+  end,
+}
