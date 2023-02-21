@@ -136,7 +136,13 @@ cmp.setup {
 }
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-local servers = {"rust_analyzer", "clangd", "sumneko_lua", "jsonls","svelte", "jdtls", "pyright"}
+local servers = {"rust_analyzer", "clangd", "jsonls","svelte", "jdtls", "pyright"}
+
+--[[ local var = true; ]]
+
+
+
+
 
 
 for _, server in pairs(servers) do
@@ -144,11 +150,15 @@ for _, server in pairs(servers) do
 end
 
 
+
 local root_files = { "*.project.json", "sourcemap.json"}
 if not table.unpack then
   table.unpack = unpack
 end
 
+
+
+local isLuauUsed = true;
 local luau_def_location = "/home/smubge/luau-lsp/globalTypes.d.lua"
 local luau_docs_location = "/home/smubge/luau-lsp/api-docs.json"
 require("lspconfig")["luau_lsp"].setup {
@@ -157,13 +167,21 @@ require("lspconfig")["luau_lsp"].setup {
     "luau-lsp", "lsp", "--definitions=" .. luau_def_location, "--docs=" .. luau_docs_location},
   capabilities = capabilities,
   filetypes = { "lua", "luau" },
-  types = {
-    roblox = false
-  },
-  --[[ root_dir = nvim_lsp.util.root_pattern(table.unpack(root_files)), ]]
   sourcemap = {rojoPath = "/home/smubge/.aftman/rojo"},
-  
+  --[[ on_init = function(client, _) ]]
+  --[[   client.notify("workspace/didChangeConfiguration") ]]
+  --[[ end, ]]
   on_attach = function(client, bufnr)
     client.server_capabilities.document_formatting = false
+    isLuauUsed = false;
+  end,
+}
+
+require("lspconfig")["sumneko_lua"].setup {
+  capabilities = capabilities,
+  on_attach = function(client, bufnr)
+    if isLuauUsed == false then
+      vim.cmd("LspStop".. client.id)
+    end
   end,
 }
