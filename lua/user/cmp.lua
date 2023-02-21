@@ -3,6 +3,11 @@ if not cmp_status_ok then
   return
 end
 
+local nvim_status_ok, nvim_lsp = pcall(require, "lspconfig")
+if not nvim_status_ok then
+  return
+end
+
 local snip_status_ok, luasnip = pcall(require, "luasnip")
 if not snip_status_ok then
   return
@@ -138,11 +143,27 @@ for _, server in pairs(servers) do
   require("lspconfig")[server].setup {capabilities = capabilities}
 end
 
+
+local root_files = { "*.project.json", "sourcemap.json"}
+if not table.unpack then
+  table.unpack = unpack
+end
+
+local luau_def_location = "/home/smubge/luau-lsp/globalTypes.d.lua"
+local luau_docs_location = "/home/smubge/luau-lsp/api-docs.json"
 require("lspconfig")["luau_lsp"].setup {
-  cmd = { "luau-lsp" },
+  root_dir = nvim_lsp.util.root_pattern(table.unpack(root_files)),
+  cmd = {
+    "luau-lsp", "lsp", "--definitions=" .. luau_def_location, "--docs=" .. luau_docs_location},
   capabilities = capabilities,
-  filetypes = { "lua" },
+  filetypes = { "lua", "luau" },
+  types = {
+    roblox = false
+  },
+  --[[ root_dir = nvim_lsp.util.root_pattern(table.unpack(root_files)), ]]
+  sourcemap = {rojoPath = "/home/smubge/.aftman/rojo"},
+  
   on_attach = function(client, bufnr)
-    client.resolved_capabilities.document_formatting = false
+    client.server_capabilities.document_formatting = false
   end,
 }
