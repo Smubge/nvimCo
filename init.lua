@@ -1,3 +1,7 @@
+vim.opt.shell = 'pwsh'
+vim.opt.shellcmdflag = '-nologo -noprofile -ExecutionPolicy RemoteSigned -command'
+vim.opt.shellxquote = ''
+
 vim.cmd "set shell=powershell"
 vim.cmd "set shellcmdflag=-command"
 vim.cmd "set shellquote=\" " 

@@ -3,6 +3,11 @@ if not cmp_status_ok then
   return
 end
 
+local lsp_status_ok, nvim_lsp = pcall(require, "lspconfig")
+if not lsp_status_ok then
+  return
+end
+
 local snip_status_ok, luasnip = pcall(require, "luasnip")
 if not snip_status_ok then
   return
@@ -131,8 +136,49 @@ cmp.setup {
 }
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-local servers = {"rust_analyzer", "clangd", "lua_ls", "jsonls","svelte", "jdtls", "pyright"}
+local servers = {"rust_analyzer","clangd", "jsonls","svelte", "jdtls", "pyright"}
 
 for _, server in pairs(servers) do
   require("lspconfig")[server].setup {capabilities = capabilities}
 end
+
+local root_files = { "*.project.json", "sourcemap.json"}
+if not table.unpack then
+  table.unpack = unpack
+end
+
+
+
+local isLuauUsed = true;
+local luau_def_location = "C:/luau-lsp/globalTypes.d.lua"
+local luau_docs_location = "C:/luau-lsp/api-docs.json"
+require("lspconfig")["luau_lsp"].setup {
+  root_dir = nvim_lsp.util.root_pattern(table.unpack(root_files)),
+  cmd = {
+    "luau-lsp", "lsp", "--definitions=" .. luau_def_location, "--docs=" .. luau_docs_location},
+  capabilities = capabilities,
+  filetypes = { "lua", "luau" },
+  sourcemap = {
+    rojoPath = ":C/Users/smubg/.aftman/rojo",
+    enabled = true,
+    rojoProjectFile = "default.project.json",
+    includeNonScripts = true,
+    autogenerate = true,
+  },
+  --[[ on_init = function(client, _) ]]
+  --[[   client.notify("workspace/didChangeConfiguration") ]]
+  --[[ end, ]]
+  on_attach = function(client, bufnr)
+    client.server_capabilities.document_formatting = false
+    isLuauUsed = false;
+  end,
+}
+
+require("lspconfig")["lua_ls"].setup {
+  capabilities = capabilities,
+  on_attach = function(client, bufnr)
+    if isLuauUsed == false then
+      vim.cmd("LspStop".. client.id)
+    end
+  end,
+}
