@@ -1,7 +1,7 @@
 
 local servers = {
 	-- "sumneko_lua",
-  "luau-lsp"
+  --[[ "luau-lsp" ]]
 	-- "pyright",
 	-- "jsonls",
 }

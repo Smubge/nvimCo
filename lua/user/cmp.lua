@@ -150,6 +150,7 @@ end
 
 
 local isLuauUsed = true;
+local lua_lspClient = 0;
 local luau_def_location = "C:/luau-lsp/globalTypes.d.lua"
 local luau_docs_location = "C:/luau-lsp/api-docs.json"
 require("lspconfig")["luau_lsp"].setup {
@@ -171,12 +172,24 @@ require("lspconfig")["luau_lsp"].setup {
   on_attach = function(client, bufnr)
     client.server_capabilities.document_formatting = false
     isLuauUsed = false;
+    if lua_lspClient ~= 0 then
+      vim.cmd("LspStop" .. lua_lspClient)
+    end
   end,
 }
 
+
+
+
+  nvim_lsp.util.on_setup = nvim_lsp.util.add_hook_before(nvim_lsp.util.on_setup, function(config)
+    if config.name == "lua_ls" then
+      
+    end
+  end)
 require("lspconfig")["lua_ls"].setup {
   capabilities = capabilities,
   on_attach = function(client, bufnr)
+    lua_lspClient = client.id
     if isLuauUsed == false then
       vim.cmd("LspStop".. client.id)
     end
