@@ -136,13 +136,7 @@ cmp.setup {
 }
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-local servers = {"rust_analyzer", "clangd", "jsonls","svelte", "jdtls", "pyright"}
-
---[[ local var = true; ]]
-
-
-
-
+local servers = {"rust_analyzer", "clangd", "jsonls","svelte", "jdtls", "pyright", "kotlin_language_server"}
 
 
 for _, server in pairs(servers) do
@@ -161,6 +155,7 @@ end
 local isLuauUsed = true;
 local luau_def_location = "/home/smubge/luau-lsp/globalTypes.d.lua"
 local luau_docs_location = "/home/smubge/luau-lsp/api-docs.json"
+
 require("lspconfig")["luau_lsp"].setup {
   root_dir = nvim_lsp.util.root_pattern(table.unpack(root_files)),
   cmd = {

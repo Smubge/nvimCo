@@ -34,7 +34,7 @@ local options = {
     linebreak = true,
     scrolloff = 8,
     sidescrolloff = 8,
-    guifont = "FiraCode Nerd Font:h10"
+    guifont = "FiraCode Nerd Font:h8"
 }
 
 vim.opt.shortmess:append "c"
