@@ -14,6 +14,11 @@ local settings = {
 			package_uninstalled = "◍",
 		},
 	},
+  --[[ vim.diagnositic.config({ ]]
+  --[[   virtual_text = false, ]]
+  --[[   signs = false, ]]
+  --[[   underline = false, ]]
+  --[[ }), ]]
 	log_level = vim.log.levels.INFO,
 	max_concurrent_installers = 4,
 }

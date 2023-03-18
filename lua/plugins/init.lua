@@ -58,6 +58,28 @@ return
    {'catppuccin/nvim'},
   {'navarasu/onedark.nvim'},
   {'Mofiqul/dracula.nvim'},
+  {"nyoom-engineering/oxocarbon.nvim"},
+  {"bluz71/vim-moonfly-colors"},
+  {"kartikp10/noctis.nvim",
+    dependencies = {
+      "rktjmp/lush.nvim",
+    },
+  },
+  {"EdenEast/nightfox.nvim",
+    config = function()
+      require("nightfox").setup({
+          groups = {
+            all = {
+              --[[ DiagnosticVirtualTextError = { fg = "#e85c51" } ]]
+              DiagnosticVirtualTextError = { link = "DiagnosticError"},
+              DiagnosticVirtualTextWarn = { link = "DiagnosticWarn"},
+              DiagnosticVirtualTextInfo = { link = "DiagnosticInfo"},
+              DiagnosticVirtualTextHint = { link = "DiagnosticHint"},
+            }
+          }
+        })
+    end
+    },
   --CMP
 
  { "hrsh7th/nvim-cmp", commit = "b0dff0ec4f2748626aae13f011d1a47071fe9abc" }, -- The completion plugin

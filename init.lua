@@ -18,5 +18,6 @@ require "user.impatient"
 require "user.lualine"
 require "user.toggleterm"
 require "user.gitsigns"
-vim.cmd "colorscheme dracula"
-vim.cmd "colorscheme dracula"
+require "user.colors"
+vim.cmd("colorscheme terafox")
+vim.cmd("colorscheme terafox") 
