@@ -95,7 +95,7 @@ return
   {"neovim/nvim-lspconfig"}, -- enable LSP
    {'williamboman/mason.nvim', 'williamboman/mason-lspconfig.nvim'},
   {"neovim/nvim-lsp"},
-
+  {"Omnisharp/omnisharp-vim"},
   --Telescope
    {"nvim-telescope/telescope.nvim"},
    {'nvim-telescope/telescope-media-files.nvim'},

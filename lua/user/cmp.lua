@@ -136,7 +136,7 @@ cmp.setup {
 }
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-local servers = {"rust_analyzer", "clangd", "jsonls","svelte", "jdtls", "pyright", "kotlin_language_server"}
+local servers = {"rust_analyzer", "clangd", "jsonls","svelte", "jdtls", "pyright", "kotlin_language_server", "tsserver", "html"--[[ "omnisharp", "omnisharp_mono", ]] --[[ "csharp_ls" ]]}
 
 
 for _, server in pairs(servers) do
@@ -152,9 +152,21 @@ end
 
 
 
+
 local isLuauUsed = true;
 local luau_def_location = "/home/smubge/luau-lsp/globalTypes.d.lua"
 local luau_docs_location = "/home/smubge/luau-lsp/api-docs.json"
+
+--[[ local pid = vim.fn.getpid() ]]
+--[[]]
+local omnisharp_mono_location = '/home/smubge/.local/share/nvim/mason/bin/omnisharp-mono'
+require("lspconfig")["omnisharp"].setup {
+  cmd = {
+    omnisharp_mono_location
+  },
+  use_modern_net = true,
+}
+
 
 require("lspconfig")["luau_lsp"].setup {
   root_dir = nvim_lsp.util.root_pattern(table.unpack(root_files)),
@@ -172,7 +184,7 @@ require("lspconfig")["luau_lsp"].setup {
   end,
 }
 
-require("lspconfig")["sumneko_lua"].setup {
+require("lspconfig")["lua_ls"].setup {
   capabilities = capabilities,
   on_attach = function(client, bufnr)
     if isLuauUsed == false then
@@ -180,3 +192,14 @@ require("lspconfig")["sumneko_lua"].setup {
     end
   end,
 }
+
+vim.api.nvim_create_autocmd("LspAttach", {
+  desc = "Fix startup error by disabling semantic tokens for omnisharp",
+  group = vim.api.nvim_create_augroup("OmnisharpHook", {}),
+  callback = function(ev)
+    local client = vim.lsp.get_client_by_id(ev.data.client_id)
+    if client.name == "omnisharp" then
+      client.server_capabilities.semanticTokensProvider = nil
+    end
+  end,
+})
