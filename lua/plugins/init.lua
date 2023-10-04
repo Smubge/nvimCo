@@ -6,6 +6,7 @@ return
         require('Comment').setup()
      end
    },
+
   {"folke/noice.nvim",
     dependencies = {
         "MunifTanjim/nui.nvim",
@@ -39,6 +40,7 @@ return
     end
 
   },
+  {'wuelnerdotexe/vim-astro'},
   {"nvim-lua/popup.nvim"}, -- An implementation of the Popup API from vim in Neovim
   {"nvim-lua/plenary.nvim"}, -- Useful lua functions used ny lots of plugins
    {'weilbith/nvim-code-action-menu', cmd = 'CodeActionMenu'},

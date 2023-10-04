@@ -136,7 +136,7 @@ cmp.setup {
 }
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-local servers = {"rust_analyzer", "clangd", "jsonls","svelte", "jdtls", "pyright", "kotlin_language_server", "tsserver", "html"--[[ "omnisharp", "omnisharp_mono", ]] --[[ "csharp_ls" ]]}
+local servers = {"rust_analyzer", "clangd", "jsonls","svelte", "jdtls", "pyright", "kotlin_language_server", "tsserver", "html", "astro"}
 
 
 for _, server in pairs(servers) do
