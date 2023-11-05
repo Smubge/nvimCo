@@ -19,3 +19,4 @@ require "user.toggleterm"
 require "user.gitsigns"
 require "user.colors"
 vim.cmd("colorscheme terafox")
+vim.cmd("colorscheme terafox")
