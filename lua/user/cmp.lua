@@ -156,17 +156,17 @@ end
 local isLuauUsed = true;
 local luau_def_location = "/home/smubge/luau-lsp/globalTypes.d.lua"
 local luau_docs_location = "/home/smubge/luau-lsp/api-docs.json"
-
 --[[ local pid = vim.fn.getpid() ]]
 --[[]]
+local omnisharp_location = "/home/smubge/.local/share/nvim/mason/bin/omnisharp"
 local omnisharp_mono_location = '/home/smubge/.local/share/nvim/mason/bin/omnisharp-mono'
+
 require("lspconfig")["omnisharp"].setup {
   cmd = {
     omnisharp_mono_location
   },
   use_modern_net = true,
 }
-
 
 require("lspconfig")["luau_lsp"].setup {
   root_dir = nvim_lsp.util.root_pattern(table.unpack(root_files)),
@@ -193,6 +193,93 @@ require("lspconfig")["lua_ls"].setup {
   end,
 }
 
+
+local pid = vim.fn.getpid()
+
+-- First Example unity 
+local myCapabilities = vim.tbl_deep_extend(
+    "force",
+    require('cmp_nvim_lsp').default_capabilities(),
+    {
+        workspace = {
+            didChangeWatchedFiles = {
+                dynamicRegistration = true,
+            },
+        },
+    }
+)
+-- omnisharp ryan.issac.g https://ryanisaacg.com/code/nvim-and-unity/
+ --[[ require("lspconfig")["omnisharp"].setup { ]]
+ --[[     cmd = { ]]
+ --[[         "mono", ]]
+ --[[         omnisharp_location, ]]
+ --[[     capabilities = myCapabilities, ]]
+ --[[         "--languageserver", ]]
+ --[[         "--hostPID", ]]
+ --[[         tostring(pid), ]]
+ --[[     }, ]]
+ --[[]]
+ --[[     -- Enables support for reading code style, naming convention and analyzer ]]
+ --[[     -- settings from .editorconfig. ]]
+ --[[     enable_editorconfig_support = true, ]]
+ --[[]]
+ --[[     -- If true, MSBuild project system will only load projects for files that ]]
+ --[[     -- were opened in the editor. This setting is useful for big C# codebases ]]
+ --[[     -- and allows for faster initialization of code navigation features only ]]
+ --[[     -- for projects that are relevant to code that is being edited. With this ]]
+ --[[     -- setting enabled OmniSharp may load fewer projects and may thus display ]]
+ --[[     -- incomplete reference lists for symbols. ]]
+ --[[     enable_ms_build_load_projects_on_demand = false, ]]
+ --[[]]
+ --[[     -- Enables support for roslyn analyzers, code fixes and rulesets. ]]
+ --[[     enable_roslyn_analyzers = false, ]]
+ --[[]]
+ --[[     -- Specifies whether 'using' directives should be grouped and sorted during ]]
+ --[[     -- document formatting. ]]
+ --[[     organize_imports_on_format = false, ]]
+ --[[]]
+ --[[     -- Enables support for showing unimported types and unimported extension ]]
+ --[[     -- methods in completion lists. When committed, the appropriate using ]]
+ --[[     -- directive will be added at the top of the current file. This option can ]]
+ --[[     -- have a negative impact on initial completion responsiveness, ]]
+ --[[     -- particularly for the first few completion sessions after opening a ]]
+ --[[     -- solution. ]]
+ --[[     enable_import_completion = false, ]]
+ --[[]]
+ --[[     -- Specifies whether to include preview versions of the .NET SDK when ]]
+ --[[     -- determining which version to use for project loading. ]]
+ --[[     sdk_include_prereleases = true, ]]
+ --[[]]
+ --[[     -- Only run analyzers against open files when 'enableRoslynAnalyzers' is ]]
+ --[[     -- true ]]
+ --[[     analyze_open_documents_only = false, ]]
+ --[[ } ]]
+
+ -- Second example dzfrias https://dzfrias.dev/blog/neovim-unity-setup
+
+--[[ require('lspconfig').omnisharp.setup { ]]
+--[[   cmd = { ]]
+--[[     'mono', ]]
+--[[     '--assembly-loader=strict', ]]
+--[[     omnisharp_location, ]]
+--[[   }, ]]
+--[[   -- Assuming you have an on_attach function. Delete this line if you don't. ]]
+--[[   use_mono = true, ]]
+--[[ } ]]
+
+
+--Third example for real https://spaceandtim.es/code/nvim_unity_setup/
+-- Omnisharp/C#/Unity
+--[[ local omnisharp_bin = "/opt/omnisharp-roslyn/run" ]]
+--[[ require'lspconfig'.omnisharp.setup{ ]]
+--[[     on_attach = on_attach, ]]
+--[[     flags = { ]]
+--[[       debounce_text_changes = 150, ]]
+--[[     }, ]]
+--[[     cmd = { omnisharp_location, "--languageserver" , "--hostPID", tostring(pid) }; ]]
+--[[ } ]]
+-- Fourht  example 
+
 vim.api.nvim_create_autocmd("LspAttach", {
   desc = "Fix startup error by disabling semantic tokens for omnisharp",
   group = vim.api.nvim_create_augroup("OmnisharpHook", {}),
@@ -203,3 +290,4 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end
   end,
 })
+
