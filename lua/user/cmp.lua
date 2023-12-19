@@ -163,9 +163,9 @@ local omnisharp_mono_location = '/home/smubge/.local/share/nvim/mason/bin/omnish
 
 require("lspconfig")["omnisharp"].setup {
   cmd = {
-    omnisharp_mono_location
+    omnisharp_location
   },
-  use_modern_net = true,
+  use_modern_net = false,
 }
 
 require("lspconfig")["luau_lsp"].setup {
