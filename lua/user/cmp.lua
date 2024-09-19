@@ -152,8 +152,7 @@ end
 
 
 
-
-local isLuauUsed = true;
+local isLuauUsed = false;
 local luau_def_location = "/home/smubge/luau-lsp/globalTypes.d.lua"
 local luau_docs_location = "/home/smubge/luau-lsp/api-docs.json"
 --[[ local pid = vim.fn.getpid() ]]
@@ -174,20 +173,22 @@ require("lspconfig")["luau_lsp"].setup {
     "luau-lsp", "lsp", "--definitions=" .. luau_def_location, "--docs=" .. luau_docs_location},
   capabilities = capabilities,
   filetypes = { "lua", "luau" },
+  single_file_support = false, 
   sourcemap = {rojoPath = "/home/smubge/.aftman/rojo"},
   --[[ on_init = function(client, _) ]]
   --[[   client.notify("workspace/didChangeConfiguration") ]]
   --[[ end, ]]
   on_attach = function(client, bufnr)
+    
     client.server_capabilities.document_formatting = false
-    isLuauUsed = false;
+    isLuauUsed = true;
   end,
 }
 
 require("lspconfig")["lua_ls"].setup {
   capabilities = capabilities,
   on_attach = function(client, bufnr)
-    if isLuauUsed == false then
+    if isLuauUsed == true then
       vim.cmd("LspStop".. client.id)
     end
   end,

@@ -1,5 +1,7 @@
 local configs = require("nvim-treesitter.configs")
 
+vim.g.skip_ts_context_commentstring_module = true 
+
 configs.setup {
   ensure_installed = "all",
   sync_install = false,
@@ -14,10 +16,10 @@ configs.setup {
 
   },
   indent = { enable = true, disable = { "yaml" } },
-  context_commentstring = {
-    enable = true,
-    enable_autocmd = false,
-  },
+  --[[ context_commentstring = { ]]
+  --[[   enable = true, ]]
+  --[[   enable_autocmd = false, ]]
+  --[[ }, ]]
 }
 local opt = vim.opt
 opt.foldmethod = "expr"

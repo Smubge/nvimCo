@@ -1,5 +1,3 @@
-require "user.autocommands"
-require "user.options"
 require "user.lazy"
 require "user.lsp"
 require "user.cmp"
@@ -17,6 +15,7 @@ require "user.impatient"
 require "user.lualine"
 require "user.toggleterm"
 require "user.gitsigns"
-require "user.colors"
-vim.cmd("colorscheme terafox")
-vim.cmd("colorscheme terafox")
+require "user.autocommands"
+require "user.options"
+--[[ vim.cmd("colorscheme terafox") ]]
+--[[ vim.cmd("colorscheme terafox") ]]
