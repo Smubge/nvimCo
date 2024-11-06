@@ -23,7 +23,7 @@ bufferline.setup {
     max_prefix_length = 30, -- prefix used when a buffer is de-duplicated
     tab_size = 21,
     diagnostics = "nvim_lsp",
-    diagnostics_update_in_insert = true,
+    -- diagnostics_update_in_insert = true,
     offsets = { { filetype = "NvimTree", text = "", padding = 1 } },
     diagnostics_indicator = function(count, level, diagnostics_dict, context)
       local icon = level:match("error") and " " or " "
@@ -35,7 +35,7 @@ bufferline.setup {
     show_tab_indicators = true,
     persist_buffer_sort = true,
     separator_style = "thin",
-    enforce_regular_tabs = true,
+    enforce_regular_tabs = false,
     always_show_bufferline = true,
     sort_by = 'id',
   }

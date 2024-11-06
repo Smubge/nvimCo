@@ -2,11 +2,14 @@ return
 {
   { "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
   {
-     'numToStr/Comment.nvim',
-     config = function()
-        require('Comment').setup()
-     end
-   },
+    "lervag/vimtex",
+    lazy = false,     -- we don't want to lazy load VimTeX
+    -- tag = "v2.15", -- uncomment to pin to a specific release
+    init = function()
+      -- VimTeX configuration goes here, e.g.
+      vim.g.vimtex_view_method = "zathura"
+    end
+  },
   {
     "folke/noice.nvim",
     event = "VeryLazy",
@@ -22,39 +25,6 @@ return
       "rcarriga/nvim-notify",
       }
   },
-  --[[ {"folke/noice.nvim", ]]
-  --[[   dependencies = { ]]
-  --[[       "MunifTanjim/nui.nvim", ]]
-  --[[       "rcarriga/nvim-notify", ]]
-  --[[     }, ]]
-  --[[   config = function() ]]
-  --[[     require("noice").setup({ ]]
-  --[[       -- your configuration comes here ]]
-  --[[       -- or leave it empty to use the default settings ]]
-  --[[       -- refer to the configuration section below ]]
-  --[[       require("notify").setup({ ]]
-  --[[         background_colour = "#000000", ]]
-  --[[       }), ]]
-  --[[       lsp = { ]]
-  --[[       -- override markdown rendering so that **cmp** and other plugins use **Treesitter** ]]
-  --[[       override = { ]]
-  --[[         ["vim.lsp.util.convert_input_to_markdown_lines"] = true, ]]
-  --[[         ["vim.lsp.util.stylize_markdown"] = true, ]]
-  --[[         ["cmp.entry.get_documentation"] = true, ]]
-  --[[       }, ]]
-  --[[     }, ]]
-  --[[     -- you can enable a preset for easier configuration ]]
-  --[[     presets = { ]]
-  --[[       bottom_search = true, -- use a classic bottom cmdline for search ]]
-  --[[       command_palette = true, -- position the cmdline and popupmenu together ]]
-  --[[       long_message_to_split = true, -- long messages will be sent to a split ]]
-  --[[       inc_rename = false, -- enables an input dialog for inc-rename.nvim ]]
-  --[[       lsp_doc_border = true, -- add a border to hover docs and signature help ]]
-  --[[     }, ]]
-  --[[         }) ]]
-  --[[   end ]]
-  --[[]]
-  --[[ }, ]]
   {'wuelnerdotexe/vim-astro'},
   {"nvim-lua/popup.nvim"}, -- An implementation of the Popup API from vim in Neovim
   {"nvim-lua/plenary.nvim"}, -- Useful lua functions used ny lots of plugins
@@ -107,7 +77,13 @@ return
 	 { "saadparwaiz1/cmp_luasnip", commit = "a9de941bcbda508d0a45d28ae366bb3f08db2e36" }, -- snippet completions
 	 { "hrsh7th/cmp-nvim-lsp", commit = "3cf38d9c957e95c397b66f91967758b31be4abe6" },
 	 { "hrsh7th/cmp-nvim-lua", commit = "d276254e7198ab7d00f117e88e223b4bd8c02d21" },  -- snippets
-  {"L3MON4D3/LuaSnip"}, --snippet engine
+  {"L3MON4D3/LuaSnip",
+    config = function()
+      local luasnip = require "luasnip"
+      luasnip.filetype_extend("javascriptreact", { "html" })
+      require("luasnip/loaders/from_vscode").lazy_load()
+     end,
+    }, --snippet engine
   {"rafamadriz/friendly-snippets"}, -- a bunch of snippets to use,
 
 	-- LSP
@@ -126,25 +102,85 @@ return
   },
    {"p00f/nvim-ts-rainbow"},
    {"nvim-treesitter/playground"},
-   {'JoosepAlviste/nvim-ts-context-commentstring'},
-
+    {
+      "folke/ts-comments.nvim",
+      opts = {},
+      event = "VeryLazy",
+      enabled = true,
+    },
    {"Pocco81/auto-save.nvim"},
    { "mfussenegger/nvim-jdtls", ft = { "java" }},
    {"HiPhish/gradle.nvim"},
    {"akinsho/bufferline.nvim"},
    {"moll/vim-bbye"},
-  --Buffers
-  --Impatient
-   {'lewis6991/impatient.nvim'},
- --Lualine
-   {
-  'nvim-lualine/lualine.nvim',
-   dependencies = { 'kyazdani42/nvim-web-devicons', opt = true }
-  },
-  --ToggleTerm
-  { "akinsho/toggleterm.nvim"},
-
-  --Copilot
-   {'github/copilot.vim'},
+ -- --Buffers
+ -- --Impatient
+ {'lewis6991/impatient.nvim'},
+ ----Lualine
+ --  {
+ -- 'nvim-lualine/lualine.nvim',
+ --  dependencies = { 'kyazdani42/nvim-web-devicons', opt = true }
+ -- },
+ -- --ToggleTerm
+ { "akinsho/toggleterm.nvim"},
+ --editor 
+ --[[ { ]]
+ --[[   "folke/trouble.nvim", ]]
+ --[[   opts = {}, -- for default options, refer to the configuration section for custom setup. ]]
+ --[[   cmd = "Trouble", ]]
+ --[[   keys = { ]]
+ --[[     { ]]
+ --[[       "<leader>xx", ]]
+ --[[       "<cmd>Trouble diagnostics toggle<cr>", ]]
+ --[[       desc = "Diagnostics (Trouble)", ]]
+ --[[     }, ]]
+ --[[     { ]]
+ --[[       "<leader>xX", ]]
+ --[[       "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", ]]
+ --[[       desc = "Buffer Diagnostics (Trouble)", ]]
+ --[[     }, ]]
+ --[[     { ]]
+ --[[       "<leader>cs", ]]
+ --[[       "<cmd>Trouble symbols toggle focus=false<cr>", ]]
+ --[[       desc = "Symbols (Trouble)", ]]
+ --[[     }, ]]
+ --[[     { ]]
+ --[[       "<leader>cl", ]]
+ --[[       "<cmd>Trouble lsp toggle focus=false win.position=right<cr>", ]]
+ --[[       desc = "LSP Definitions / references / ... (Trouble)", ]]
+ --[[     }, ]]
+ --[[     { ]]
+ --[[       "<leader>xL", ]]
+ --[[       "<cmd>Trouble loclist toggle<cr>", ]]
+ --[[       desc = "Location List (Trouble)", ]]
+ --[[     }, ]]
+ --[[     { ]]
+ --[[       "<leader>xQ", ]]
+ --[[       "<cmd>Trouble qflist toggle<cr>", ]]
+ --[[       desc = "Quickfix List (Trouble)", ]]
+ --[[     }, ]]
+ --[[   }, ]]
+ --[[ }, ]]
+ --[[ { ]]
+ --[[   "folke/todo-comments.nvim", ]]
+ --[[   dependencies = { "nvim-lua/plenary.nvim" }, ]]
+ --[[   opts = { ]]
+ --[[     -- your configuration comes here ]]
+ --[[     -- or leave it empty to use the default settings ]]
+ --[[     -- refer to the configuration section below ]]
+ --[[   } ]]
+ --[[ }, ]]
+ --[[ --ts-autotag  ]]
+ --[[ {"windwp/nvim-ts-autotag"}, ]]
+ --[[ --persistence ]]
+ --[[ { ]]
+ --[[   "folke/persistence.nvim", ]]
+ --[[   event = "BufReadPre", -- this will only start session saving when an actual file was opened ]]
+ --[[   opts = { ]]
+ --[[       need = 0 ]]
+ --[[     -- add any custom options here ]]
+ --[[   } ]]
+ --[[ }, ]]
+ --Copilot
+  {'github/copilot.vim'},
 }
-

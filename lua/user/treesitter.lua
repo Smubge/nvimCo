@@ -5,7 +5,7 @@ vim.g.skip_ts_context_commentstring_module = true
 configs.setup {
   ensure_installed = "all",
   sync_install = false,
-  ignore_install = { "smali" }, -- List of parsers to ignore installing
+  ignore_install = { "smali"}, -- List of parsers to ignore installing
   autopairs = {
    enable = true,
   },

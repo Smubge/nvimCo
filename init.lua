@@ -17,5 +17,5 @@ require "user.toggleterm"
 require "user.gitsigns"
 require "user.autocommands"
 require "user.options"
---[[ vim.cmd("colorscheme terafox") ]]
---[[ vim.cmd("colorscheme terafox") ]]
+vim.cmd("colorscheme terafox")
+vim.cmd("colorscheme terafox")
