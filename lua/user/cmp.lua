@@ -153,31 +153,24 @@ local isLuauUsed = true;
 local lua_lspClient = 0;
 local luau_def_location = "C:/luau-lsp/globalTypes.d.lua"
 local luau_docs_location = "C:/luau-lsp/api-docs.json"
+
 require("lspconfig")["luau_lsp"].setup {
   root_dir = nvim_lsp.util.root_pattern(table.unpack(root_files)),
   cmd = {
     "luau-lsp", "lsp", "--definitions=" .. luau_def_location, "--docs=" .. luau_docs_location},
   capabilities = capabilities,
   filetypes = { "lua", "luau" },
-  sourcemap = {
-    rojoPath = ":C/Users/smubg/.aftman/rojo",
-    enabled = true,
-    rojoProjectFile = "default.project.json",
-    includeNonScripts = true,
-    autogenerate = true,
-  },
+  single_file_support = false, 
+  sourcemap = {rojoPath = "/home/smubge/.aftman/rojo"},
   --[[ on_init = function(client, _) ]]
   --[[   client.notify("workspace/didChangeConfiguration") ]]
   --[[ end, ]]
   on_attach = function(client, bufnr)
+    
     client.server_capabilities.document_formatting = false
-    isLuauUsed = false;
-    if lua_lspClient ~= 0 then
-      vim.cmd("LspStop" .. lua_lspClient)
-    end
+    isLuauUsed = true;
   end,
 }
-
 
 
 
